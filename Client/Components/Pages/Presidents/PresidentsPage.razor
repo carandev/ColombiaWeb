@@ -1,5 +1,6 @@
-@page "/Presidents"
+@attribute [Route(PageRoutes.Presidents)]
 @rendermode InteractiveServer
+@using Client.Utils
 @inherits Client.Utils.BasePageWithPagination<Data.Models.President>
 
 <h1>Presidentes</h1>
