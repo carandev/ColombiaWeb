@@ -1,0 +1,21 @@
+@page "/Presidents"
+
+<h1>Presidentes</h1>
+@if (PaginatedPresidents != null)
+{
+    <section class="cards-container">
+        @foreach (var president in PaginatedPresidents.Data)
+        {
+            <PresidentCard CurrentPresident="@president"/>
+        }
+    </section>
+    <Pagination
+        PageSize="@PaginatedPresidents.PageSize"
+        Total="@PaginatedPresidents.Total"
+        PageCount="@PaginatedPresidents.PageCount"
+        PageNumber="@PaginatedPresidents.Page"/>
+}
+else
+{
+    <Loading/>
+}

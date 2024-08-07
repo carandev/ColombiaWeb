@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Client.Components.Shared;
 
-public partial class Card : ComponentBase
+public partial class PresidentCard : ComponentBase
 {
     /// <summary>
     ///     Presidente.

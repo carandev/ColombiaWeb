@@ -1,4 +1,5 @@
 using Client.Components;
+using Data;
 using Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +10,12 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddScoped<PresidentService>();
 
+SharedValues.ApiColombiaBaseURL = builder.Configuration["Colombia_API"] ??
+                                  throw new ApplicationException("No se encontró la URL del API");
+
 builder.Services.AddScoped(s => new HttpClient
 {
-    BaseAddress = new Uri(builder.Configuration["Colombia_API"] ??
-                          throw new ApplicationException("No se encontró la URL del API"))
+    BaseAddress = new Uri(SharedValues.ApiColombiaBaseURL)
 });
 
 var app = builder.Build();

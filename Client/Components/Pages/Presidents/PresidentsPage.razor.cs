@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Client.Components.Pages.Presidents;
 
-public partial class PresidentPage : ComponentBase
+public partial class PresidentsPage : ComponentBase
 {
     [Inject] public PresidentService PresidentSrv { get; set; } = null!;
 
