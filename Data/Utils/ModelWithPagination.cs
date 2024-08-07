@@ -19,12 +19,12 @@ public class ModelWithPagination<T>
     /// <summary>
     ///     Cantidad total de elementos consultados.
     /// </summary>
-    public int Total { get; set; }
+    public int TotalRecords { get; set; }
 
     /// <summary>
     ///     Cantidad total de páginas.
     /// </summary>
-    public int PageCount => Total / PageSize;
+    public int PageCount { get; set; }
 
     /// <summary>
     ///     Listado de elementos.

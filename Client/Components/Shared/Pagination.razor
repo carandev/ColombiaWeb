@@ -1,7 +1,9 @@
+@rendermode InteractiveServer
+
 <footer class="pagination">
-    <button class="pagination-button">Anterior</button>
+    <button @onclick="@PreviousPage" class="pagination-button">Anterior</button>
     <p>
         Página @PageNumber de @PageCount
     </p>
-    <button class="pagination-button">Siguiente</button>
+    <button @onclick="@NextPage" class="pagination-button">Siguiente</button>
 </footer>

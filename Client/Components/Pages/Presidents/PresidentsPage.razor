@@ -1,19 +1,23 @@
 @page "/Presidents"
+@rendermode InteractiveServer
+@inherits Client.Utils.BasePageWithPagination<Data.Models.President>
 
 <h1>Presidentes</h1>
-@if (PaginatedPresidents != null)
+@if (PaginatedModel != null && !LoadingData)
 {
     <section class="cards-container">
-        @foreach (var president in PaginatedPresidents.Data)
+        @foreach (var president in PaginatedModel.Data)
         {
             <PresidentCard CurrentPresident="@president"/>
         }
     </section>
     <Pagination
-        PageSize="@PaginatedPresidents.PageSize"
-        Total="@PaginatedPresidents.Total"
-        PageCount="@PaginatedPresidents.PageCount"
-        PageNumber="@PaginatedPresidents.Page"/>
+        OnNextPage="@NextPage"
+        OnPreviousPage="@PreviousPage"
+        PageSize="@PaginatedModel.PageSize"
+        Total="@PaginatedModel.TotalRecords"
+        PageCount="@PaginatedModel.PageCount"
+        PageNumber="@PaginatedModel.Page"/>
 }
 else
 {

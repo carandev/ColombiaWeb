@@ -9,9 +9,9 @@ namespace Data.Services;
 /// </summary>
 public class PresidentService(HttpClient httpClient)
 {
-    public async Task<ModelWithPagination<President>?> GetPaginatedPresidents()
+    public async Task<ModelWithPagination<President>?> GetPaginatedPresidents(int pageNumber, int pageSize)
     {
-        var query = $"{SharedValues.ApiColombiaPresidentEndpoint}/pagedList?Page=1&PageSize=10";
+        var query = $"{SharedValues.ApiColombiaPresidentEndpoint}/pagedList?Page={pageNumber}&PageSize={pageSize}";
 
         var response = await httpClient.GetAsync(query);
 
