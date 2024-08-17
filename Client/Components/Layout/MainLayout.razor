@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
+<FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Word" />
 @Body
 
 <div id="blazor-error-ui">
@@ -7,3 +8,9 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+<FluentToastProvider />
+<FluentDialogProvider />
+<FluentTooltipProvider />
+<FluentMessageBarProvider />
+<FluentDesignTheme StorageName="theme" />

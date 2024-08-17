@@ -1,35 +1,33 @@
-using Data.Utils;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace Client.Utils;
 
 public abstract class BasePageWithPagination<T> : ComponentBase
 {
-    [Inject] public IJSRuntime JS { get; set; } = null!;
-    [Inject] public NavigationManager NavMgr { get; set; } = null!;
-
-    [SupplyParameterFromQuery] public int PageSize { get; set; }
-
-    [SupplyParameterFromQuery] protected int PageNumber { get; set; }
-
     protected bool LoadingData { get; set; }
 
     protected abstract string PageRoute { get; }
 
-    protected ModelWithPagination<T>? PaginatedModel { get; set; }
+    protected GridItemsProvider<T> DataProvider = null!;
+    
+    protected readonly PaginationState Pagination = new()
+    {
+            ItemsPerPage = 10
+        };
 
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
     {
         try
         {
             LoadingData = true;
             StateHasChanged();
 
-            await GetData();
+            DataProvider = GetData;
 
             LoadingData = false;
             StateHasChanged();
+            return Task.CompletedTask;
         }
         catch (Exception e)
         {
@@ -38,32 +36,5 @@ public abstract class BasePageWithPagination<T> : ComponentBase
         }
     }
 
-    protected abstract Task GetData();
-
-    protected async Task NextPage()
-    {
-        if (PaginatedModel != null && PaginatedModel.PageCount > PageNumber)
-        {
-            PageNumber++;
-            await GetData();
-            await ScrollToUp();
-            NavMgr.NavigateTo($"{PageRoute}?pageNumber={PageNumber}&pageSize={PageSize}");
-        }
-    }
-
-    protected async Task PreviousPage()
-    {
-        if (PageNumber > 1)
-        {
-            PageNumber--;
-            await GetData();
-            await ScrollToUp();
-            NavMgr.NavigateTo($"{PageRoute}?pageNumber={PageNumber}&pageSize={PageSize}");
-        }
-    }
-    
-   private async Task ScrollToUp()
-   {
-      await JS.InvokeVoidAsync("scroll", "0", "0");
-   }
+    protected abstract ValueTask<GridItemsProviderResult<T>> GetData(GridItemsProviderRequest<T> request);
 }

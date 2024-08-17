@@ -1,6 +1,7 @@
 using Client.Components;
 using Data;
 using Data.Services;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddScoped(s => new HttpClient
 {
     BaseAddress = new Uri(SharedValues.ApiColombiaBaseURL)
 });
+
+builder.Services.AddFluentUIComponents();
 
 var app = builder.Build();
 

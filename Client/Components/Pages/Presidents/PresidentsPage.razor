@@ -1,24 +1,25 @@
 @attribute [Route(PageRoutes.Presidents)]
 @rendermode InteractiveServer
 @using Client.Utils
+@using Data.Models
 @inherits Client.Utils.BasePageWithPagination<Data.Models.President>
 
 <h1>Presidentes</h1>
-@if (PaginatedModel != null && !LoadingData)
+@if (!LoadingData)
 {
-    <section class="cards-container">
-        @foreach (var president in PaginatedModel.Data)
-        {
-            <PresidentCard CurrentPresident="@president"/>
-        }
-    </section>
-    <Pagination
-        OnNextPage="@NextPage"
-        OnPreviousPage="@PreviousPage"
-        PageSize="@PaginatedModel.PageSize"
-        Total="@PaginatedModel.TotalRecords"
-        PageCount="@PaginatedModel.PageCount"
-        PageNumber="@PaginatedModel.Page"/>
+    <FluentDataGrid Loading="true" ItemsProvider="@DataProvider" Pagination="@Pagination" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="President">
+        <PropertyColumn Property="@(p => p.Id)" Sortable="true" Title="ID"/>
+        <PropertyColumn Property="@(p => p.Name)" Sortable="true" Title="Nombre"/>
+        <PropertyColumn Property="@(p => p.Description)" Title="Descripcion"/>
+    </FluentDataGrid>
+    <FluentPaginator State="@Pagination">
+        <SummaryTemplate>
+            <strong>@(Pagination.TotalItemCount ?? 0)</strong> presidentes
+        </SummaryTemplate>
+        <PaginationTextTemplate>
+            <strong>@(Pagination.CurrentPageIndex + 1)</strong> de <strong>@(Pagination.LastPageIndex + 1)</strong> paginas
+        </PaginationTextTemplate>
+    </FluentPaginator>
 }
 else
 {

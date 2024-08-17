@@ -9,8 +9,11 @@ namespace Data.Services;
 /// </summary>
 public class PresidentService(HttpClient httpClient)
 {
-    public async Task<ModelWithPagination<President>?> GetPaginatedPresidents(int pageNumber, int pageSize)
+    public async Task<ModelWithPagination<President>?> GetPaginatedPresidents(int? pageNumber, int? pageSize)
     {
+        pageNumber ??= 1;
+        pageSize ??= 10;
+        
         var query = $"{SharedValues.ApiColombiaPresidentEndpoint}/pagedList?Page={pageNumber}&PageSize={pageSize}";
 
         var response = await httpClient.GetAsync(query);
@@ -23,6 +26,11 @@ public class PresidentService(HttpClient httpClient)
         }
 
         var message = await response.Content.ReadAsStringAsync();
+
+        if (string.IsNullOrWhiteSpace(message))
+        {
+            message = response.ToString();
+        }
 
         throw new ApplicationException($"Ocurrió un error al consultar los presidentes: {message}");
     }

@@ -1,7 +1,7 @@
 using Data.Models;
 using Microsoft.AspNetCore.Components;
 
-namespace Client.Components.Shared;
+namespace Client.Components.Pages.Presidents;
 
 public partial class PresidentCard : ComponentBase
 {
