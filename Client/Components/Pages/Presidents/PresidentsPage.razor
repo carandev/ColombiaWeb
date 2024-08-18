@@ -10,16 +10,9 @@
     <FluentDataGrid Loading="true" ItemsProvider="@DataProvider" Pagination="@Pagination" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="President">
         <PropertyColumn Property="@(p => p.Id)" Sortable="true" Title="ID"/>
         <PropertyColumn Property="@(p => p.Name)" Sortable="true" Title="Nombre"/>
-        <PropertyColumn Property="@(p => p.Description)" Title="Descripcion"/>
+        <PropertyColumn Property="@(p => p.Description)" Title="Descripción"/>
     </FluentDataGrid>
-    <FluentPaginator State="@Pagination">
-        <SummaryTemplate>
-            <strong>@(Pagination.TotalItemCount ?? 0)</strong> presidentes
-        </SummaryTemplate>
-        <PaginationTextTemplate>
-            <strong>@(Pagination.CurrentPageIndex + 1)</strong> de <strong>@(Pagination.LastPageIndex + 1)</strong> paginas
-        </PaginationTextTemplate>
-    </FluentPaginator>
+    <PaginationComponent Pagination="@Pagination"/>
 }
 else
 {

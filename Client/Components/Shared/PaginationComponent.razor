@@ -1,0 +1,10 @@
+@rendermode InteractiveServer
+
+<FluentPaginator State="@Pagination">
+    <SummaryTemplate>
+        <strong>@(Pagination.TotalItemCount ?? 0)</strong> registros
+    </SummaryTemplate>
+    <PaginationTextTemplate>
+        <strong>@(Pagination.CurrentPageIndex + 1)</strong> de <strong>@(Pagination.LastPageIndex + 1)</strong> paginas
+    </PaginationTextTemplate>
+</FluentPaginator>
