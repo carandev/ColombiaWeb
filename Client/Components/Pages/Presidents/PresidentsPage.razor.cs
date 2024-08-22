@@ -1,4 +1,3 @@
-using Client.Utils;
 using Data.Models;
 using Data.Services;
 using Microsoft.AspNetCore.Components;
@@ -6,12 +5,17 @@ using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace Client.Components.Pages.Presidents;
 
+/// <summary>
+///     Página con un listado de presidentes.
+/// </summary>
 public partial class PresidentsPage
 {
+    /// <summary>
+    ///     Servicio que permite consultar los presidentes.
+    /// </summary>
     [Inject] public PresidentService PresidentSrv { get; set; } = null!;
 
-    protected override string PageRoute => PageRoutes.Presidents;
-
+    /// <inheritdoc />
     protected override async ValueTask<GridItemsProviderResult<President>> GetData(
         GridItemsProviderRequest<President> request)
     {

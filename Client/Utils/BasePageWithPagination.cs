@@ -3,19 +3,31 @@ using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace Client.Utils;
 
+/// <summary>
+///     Página base con paginación.
+/// </summary>
+/// <typeparam name="T">Modelo que se va a paginar</typeparam>
 public abstract class BasePageWithPagination<T> : ComponentBase
 {
+    /// <summary>
+    ///     Indica si está cargando información.
+    /// </summary>
     protected bool LoadingData { get; set; }
 
-    protected abstract string PageRoute { get; }
-
+    /// <summary>
+    ///     Proveedor de elementos para la tabla con paginación.
+    /// </summary>
     protected GridItemsProvider<T> DataProvider = null!;
-    
+
+    /// <summary>
+    ///     Estado de la paginación, indicando la cantidad de elementos por página.
+    /// </summary>
     protected readonly PaginationState Pagination = new()
     {
-            ItemsPerPage = 10
-        };
+        ItemsPerPage = 10
+    };
 
+    /// <inheritdoc />
     protected override Task OnInitializedAsync()
     {
         try
@@ -36,5 +48,10 @@ public abstract class BasePageWithPagination<T> : ComponentBase
         }
     }
 
+    /// <summary>
+    ///     Obtiene la información necesaria para alimentar la tabla con paginación.
+    /// </summary>
+    /// <param name="request">Solicitud enviada por la tabla indicando la página y otros datos</param>
+    /// <returns>El resultado de la petición</returns>
     protected abstract ValueTask<GridItemsProviderResult<T>> GetData(GridItemsProviderRequest<T> request);
 }
