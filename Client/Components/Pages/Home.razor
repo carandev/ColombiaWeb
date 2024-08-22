@@ -1,22 +1,31 @@
 ﻿@page "/"
+@using Client.Utils
 
 <PageTitle>Home</PageTitle>
 
-<FluentCard Height="320" Width="320">
-    <p>Just some content in a card (with a button that does not do anything).</p>
+<div style="display: flex; gap: 1rem">
+    <FluentCard>
+        <h4>Presidentes</h4>
+        <p>Un listado con los detalles de todos lo presidentes que han pasado por este país.</p>
+        <FluentAnchor 
+            Appearance="Appearance.Accent" Href="@PageRoutes.Presidents">
+            Ver más
+        </FluentAnchor>
+    </FluentCard>
+    <FluentCard>
+        <p>Just some content in a card (with a button that does not do anything).</p>
 
-    <FluentButton Appearance="Appearance.Accent">Hello</FluentButton>
-    <p>No Width or Height has been specified.</p>
-</FluentCard>
-<FluentCard Height="320" Width="320">
-    <p>Just some content in a card (with a button that does not do anything).</p>
+        <FluentButton Appearance="Appearance.Accent">Hello</FluentButton>
+        <p>No Width or Height has been specified.</p>
+    </FluentCard>
+    <FluentCard>
+        <p>Just some content in a card (with a button that does not do anything).</p>
 
-    <FluentButton Appearance="Appearance.Accent">Hello</FluentButton>
-    <p>No Width or Height has been specified.</p>
-</FluentCard>
-<FluentCard Height="320" Width="320">
-    <p>Just some content in a card (with a button that does not do anything).</p>
+        <FluentButton Appearance="Appearance.Accent">Hello</FluentButton>
+        <p>No Width or Height has been specified.</p>
+    </FluentCard>
+</div>
 
-    <FluentButton Appearance="Appearance.Accent">Hello</FluentButton>
-    <p>No Width or Height has been specified.</p>
-</FluentCard>
+@code {
+    [Inject] public NavigationManager NavMgr { get; set; } = null!;
+}
