@@ -10,6 +10,11 @@ namespace Client.Utils;
 public abstract class BasePageWithPagination<T> : ComponentBase
 {
     /// <summary>
+    ///     Gestor de navegación.
+    /// </summary>
+    [Inject] public NavigationManager NavMgr { get; set; } = null!;
+    
+    /// <summary>
     ///     Indica si está cargando información.
     /// </summary>
     protected bool LoadingData { get; set; }

@@ -9,8 +9,13 @@
 {
     <FluentDataGrid Loading="true" ItemsProvider="@DataProvider" Pagination="@Pagination" GenerateHeader="GenerateHeaderOption.Sticky" TGridItem="President">
         <PropertyColumn Property="@(p => p.Id)" Sortable="true" Title="ID"/>
-        <PropertyColumn Property="@(p => p.Name)" Sortable="true" Title="Nombre"/>
-        <PropertyColumn Property="@(p => p.Description)" Title="Descripción"/>
+        <PropertyColumn Property="@(p => $"{p.Name} {p.LastName}")" Sortable="true" Title="Nombre completo"/>
+        <PropertyColumn Property="@(p => p.StartPeriodDate.ToString("dd/MM/yyyy"))" Title="Fecha de inicio del periodo"/>
+        <PropertyColumn Property="@(p => p.EndPeriodDate != null ? p.EndPeriodDate.Value.ToString("dd/MM/yyyy") : "" )" Title="Fecha de fin del periodo"/>
+        <PropertyColumn Property="@(p => p.PoliticalParty)" Title="Partido político"/>
+        <TemplateColumn>
+            <FluentButton aria-label="Consultar presidente" IconEnd="@(new Icons.Filled.Size16.Eye())" OnClick="@(() => NavMgr.NavigateTo($"{PageRoutes.Presidents}/{context.Id}"))">Consultar</FluentButton> 
+        </TemplateColumn>
     </FluentDataGrid>
     <PaginationComponent Pagination="@Pagination"/>
 }
