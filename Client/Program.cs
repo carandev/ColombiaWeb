@@ -12,6 +12,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<PresidentService>();
 
 SharedValues.ApiColombiaBaseURL = builder.Configuration["Colombia_API"] ??
+                                  Environment.GetEnvironmentVariable("COLOMBIA_API") ??
                                   throw new ApplicationException("No se encontró la URL del API");
 
 builder.Services.AddScoped(s => new HttpClient

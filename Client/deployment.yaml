@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: colombia-web-deployment
+  labels:
+    app: colombia-web
+spec:
+  replicas: 1  # Número de réplicas de la aplicación
+  selector:
+    matchLabels:
+      app: colombia-web
+  template:
+    metadata:
+      labels:
+        app: colombia-web
+    spec:
+      containers:
+        - name: colombia-web-container
+          image: carandev/colombia-web:latest  # Reemplaza con tu imagen
+          ports:
+            - containerPort: 8080  # Puerto expuesto por tu aplicación
+          env:  # Variables de entorno si tu app las necesita
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: COLOMBIA_API
+              value: "https://api-colombia.com"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: colombia-web-service
+spec:
+  type: LoadBalancer  # Usa NodePort si no tienes un balanceador de carga
+  ports:
+    - port: 80
+      targetPort: 8080  # Debe coincidir con el containerPort
+  selector:
+    app: colombia-web
