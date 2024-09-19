@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: colombia-web-container
-          image: carandev/colombia-web:latest  # Reemplaza con tu imagen
+          image: ghcr.io/carandev/colombiaweb:main
           ports:
             - containerPort: 8080  # Puerto expuesto por tu aplicación
           env:  # Variables de entorno si tu app las necesita
@@ -24,6 +24,8 @@ spec:
               value: "Production"
             - name: COLOMBIA_API
               value: "https://api-colombia.com"
+      imagePullSecrets:
+        - name: github-pkg-secret
 ---
 apiVersion: v1
 kind: Service
