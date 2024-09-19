@@ -24,4 +24,4 @@ jobs:
           
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f ./Client/deployment.yaml
+          kubectl rollout restart deployment colombia-web-deployment
