@@ -22,8 +22,6 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG_CONTENT }}" > ~/.kube/config
           
-      - run: pwd
-
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f ./Client/deployment.yml
+          kubectl apply -f ./Client/deployment.yaml
