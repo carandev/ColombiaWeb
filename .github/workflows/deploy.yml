@@ -17,7 +17,7 @@ jobs:
         with:
           version: 'latest'
           
-      - run: echo "${{ secrets.KUBECONFIG_CONTENT }}"
+      - run: echo "${{ secrets }}"
 
       - name: Configure kubeconfig
         run: |
