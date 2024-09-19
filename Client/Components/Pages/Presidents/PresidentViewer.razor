@@ -1,5 +1,29 @@
-<h3>PresidentViewer</h3>
+@using Data.Models
+    <main class="viewer">
+        <h1>@PresidentDetails.Name @PresidentDetails.LastName</h1>
+        <article class="viewer-content">
+            <img src="@PresidentDetails.Image" alt="@PresidentDetails.Name" height="300px">
+            <h4>
+                Desde <DateWithoutTimeViewer Date="@PresidentDetails.StartPeriodDate"/>
+                @if (PresidentDetails.EndPeriodDate.HasValue)
+                {
+                    <span>
+                        hasta <DateWithoutTimeViewer Date="@PresidentDetails.EndPeriodDate.Value"/>
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        hasta actualidad
+                    </span>
+                }
+            </h4>
+            <p>
+                @PresidentDetails.Description
+            </p>
+        </article>
+    </main>
 
 @code {
-    
+    [Parameter][EditorRequired] public President PresidentDetails { get; set; } = null!;
 }

@@ -7,26 +7,19 @@ namespace Client.Components.Pages.Presidents;
 /// <summary>
 ///     Vista de detalle del presidente.
 /// </summary>
-public partial class PresidentDetails : ComponentBase
+public partial class PresidentDetails
 {
-    /// <summary>
-    ///     Identificador del presidente.
-    /// </summary>
-    [Parameter]
-    public int PresidentId { get; set; }
-    
     /// <summary>
     ///     Servicio para consulta de presidentes en el API Colombia.
     /// </summary>
     [Inject] public PresidentService PresidentSrv { get; set; } = null!;
 
     /// <summary>
-    ///     Presidente.
+    ///     Obtiene la información del presidente.
     /// </summary>
-    private President? _president;
-    
-    protected override async Task OnInitializedAsync()
+    /// <returns>El modelo de presidente</returns>
+    protected override async Task<President?> GetData()
     {
-        _president = await PresidentSrv.GetPresidentById(PresidentId);
+        return await PresidentSrv.GetPresidentById(EntityId);
     }
 }

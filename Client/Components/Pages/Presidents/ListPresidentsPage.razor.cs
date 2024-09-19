@@ -8,7 +8,7 @@ namespace Client.Components.Pages.Presidents;
 /// <summary>
 ///     Página con un listado de presidentes.
 /// </summary>
-public partial class PresidentsPage
+public partial class ListPresidentsPage
 {
     /// <summary>
     ///     Servicio que permite consultar los presidentes.

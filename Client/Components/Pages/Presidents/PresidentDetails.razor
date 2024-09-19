@@ -1,31 +1,9 @@
-@page "/Presidents/{PresidentId:int}"
+@page "/Presidents/{EntityId:int}"
+@inherits Client.Utils.BaseDetailsPage<Data.Models.President>
 
-@if (_president != null)
+@if (Entity != null)
 {
-    <main class="viewer">
-        <h1>@_president.Name @_president.LastName</h1>
-        <article class="viewer-content">
-            <img src="@_president.Image" alt="@_president.Name" height="300px">
-            <h4>
-                Desde <DateWithoutTimeViewer Date="@_president.StartPeriodDate"/>
-                @if (_president.EndPeriodDate.HasValue)
-                {
-                    <span>
-                        hasta <DateWithoutTimeViewer Date="@_president.EndPeriodDate.Value"/>
-                    </span>
-                }
-                else
-                {
-                    <span>
-                        hasta actualidad
-                    </span>
-                }
-            </h4>
-            <p>
-                @_president.Description
-            </p>
-        </article>
-    </main>
+    <PresidentViewer PresidentDetails="@Entity"/>
 }
 else
 {
