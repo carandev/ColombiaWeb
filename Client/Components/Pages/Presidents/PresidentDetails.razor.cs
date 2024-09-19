@@ -7,7 +7,7 @@ namespace Client.Components.Pages.Presidents;
 /// <summary>
 ///     Vista de detalle del presidente.
 /// </summary>
-public partial class PresidentViewer : ComponentBase
+public partial class PresidentDetails : ComponentBase
 {
     /// <summary>
     ///     Identificador del presidente.

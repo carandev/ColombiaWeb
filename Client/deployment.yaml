@@ -30,9 +30,10 @@ kind: Service
 metadata:
   name: colombia-web-service
 spec:
-  type: LoadBalancer  # Usa NodePort si no tienes un balanceador de carga
+  type: NodePort
   ports:
     - port: 80
-      targetPort: 8080  # Debe coincidir con el containerPort
+      targetPort: 8080
+      nodePort: 30003
   selector:
     app: colombia-web
