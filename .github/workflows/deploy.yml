@@ -16,6 +16,8 @@ jobs:
         uses: azure/setup-kubectl@v4
         with:
           version: 'latest'
+          
+      - run: echo "${{ secrets.KUBECONFIG_CONTENT }}"
 
       - name: Configure kubeconfig
         run: |
