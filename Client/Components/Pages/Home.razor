@@ -1,7 +1,7 @@
 ﻿@page "/"
 @using Client.Utils
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Inicio</PageTitle>
 
 <div style="display: flex; gap: 1rem">
     <FluentCard>
@@ -9,6 +9,14 @@
         <p>Un listado con los detalles de todos lo presidentes que han pasado por este país.</p>
         <FluentAnchor 
             Appearance="Appearance.Accent" Href="@PageRoutes.Presidents">
+            Ver más
+        </FluentAnchor>
+    </FluentCard>
+    <FluentCard>
+        <h4>Ciudades</h4>
+        <p>Un listado con los detalles de todas las ciudades del país.</p>
+        <FluentAnchor
+                Appearance="Appearance.Accent" Href="@PageRoutes.Presidents">
             Ver más
         </FluentAnchor>
     </FluentCard>
