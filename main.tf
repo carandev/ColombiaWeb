@@ -37,7 +37,7 @@ resource "null_resource" "check_deployment_exists" {
 
 # Crear el deployment solo si no existe
 resource "kubernetes_deployment" "colombia_web" {
-  count = "${(self.triggers.always_run == "not found") ? 1 : 0}"
+  count = (null_resource.check_deployment_exists.triggers.always_run == "not found" ? 1 : 0)
 
   metadata {
     name = "colombia-web-deployment"
@@ -112,7 +112,7 @@ resource "null_resource" "check_service_exists" {
 
 # Crear el servicio solo si no existe
 resource "kubernetes_service" "colombia_web_service" {
-  count = "${(self.triggers.always_run == 'not found') ? 1 : 0}"
+  count = (null_resource.check_service_exists.triggers.always_run == "not found" ? 1 : 0)
 
   metadata {
     name = "colombia-web-service"
