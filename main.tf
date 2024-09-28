@@ -24,25 +24,20 @@ provider "kubernetes" {
   insecure = data.spot_kubeconfig.example.kubeconfigs[0].insecure
 }
 
-# Verificar si ya existe el deployment
-data "kubernetes_deployment" "existing_colombia_web" {
-  metadata {
-    name      = "colombia-web-deployment"
-    namespace = "default"
+# Comprobar si el deployment existe usando kubectl
+resource "null_resource" "check_deployment_exists" {
+  provisioner "local-exec" {
+    command = "kubectl get deployment colombia-web-deployment --namespace=default || echo 'not found'"
+  }
+
+  triggers = {
+    always_run = timestamp()
   }
 }
 
-# Verificar si ya existe el servicio
-data "kubernetes_service" "existing_colombia_web_service" {
-  metadata {
-    name      = "colombia-web-service"
-    namespace = "default"
-  }
-}
-
-# Recurso Deployment de Kubernetes
+# Crear el deployment solo si no existe
 resource "kubernetes_deployment" "colombia_web" {
-  count = length(data.kubernetes_deployment.existing_colombia_web.metadata.0.name) == 0 ? 1 : 0
+  count = "${(self.triggers.always_run == "not found") ? 1 : 0}"
 
   metadata {
     name = "colombia-web-deployment"
@@ -104,22 +99,20 @@ resource "kubernetes_deployment" "colombia_web" {
   }
 }
 
-# Recurso para reiniciar el Deployment si ya existe
-resource "null_resource" "restart_colombia_web" {
-  count = length(data.kubernetes_deployment.existing_colombia_web.metadata.0.name) > 0 ? 1 : 0
-
-  triggers = {
-    timestamp = timestamp()
+# Comprobar si el servicio existe usando kubectl
+resource "null_resource" "check_service_exists" {
+  provisioner "local-exec" {
+    command = "kubectl get service colombia-web-service --namespace=default || echo 'not found'"
   }
 
-  provisioner "local-exec" {
-    command = "kubectl rollout restart deployment colombia-web-deployment"
+  triggers = {
+    always_run = timestamp()
   }
 }
 
-# Recurso Service de Kubernetes, solo si no existe
+# Crear el servicio solo si no existe
 resource "kubernetes_service" "colombia_web_service" {
-  count = length(data.kubernetes_service.existing_colombia_web_service.metadata.0.name) == 0 ? 1 : 0
+  count = "${(self.triggers.always_run == 'not found') ? 1 : 0}"
 
   metadata {
     name = "colombia-web-service"
