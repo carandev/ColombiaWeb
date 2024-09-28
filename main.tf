@@ -93,10 +93,9 @@ resource "kubernetes_service" "colombia_web_service" {
     port {
       port        = 80
       target_port = 8080
+      node_port   = 30003
     }
 
     type = "NodePort"
-
-    node_port = 30003
   }
 }
