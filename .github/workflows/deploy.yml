@@ -99,21 +99,26 @@ jobs:
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
         
   deploy:
+    name: Deploy to Rackspace Kubernetes
     runs-on: ubuntu-latest
     needs: [deploy_image]
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
         with:
-          version: 'latest'
+          terraform_wrapper: false
 
-      - name: Configure kubeconfig
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG_CONTENT }}" > ~/.kube/config
-          
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl rollout restart deployment colombia-web-deployment
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        env:
+          SPOT_TOKEN: ${{ secrets.SPOT_TOKEN }}
+          CLOUDSPACE_NAME: ${{ secrets.CLOUDSPACE_NAME }}
+        run: terraform apply -auto-approve \
+          -var="token=${{ secrets.SPOT_TOKEN }}" \
+          -var="cloudspace_name=${{ secrets.CLOUDSPACE_NAME }}"
