@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Client.Utils
+@inherits LayoutComponentBase
 
 <FluentDesignTheme OfficeColor="OfficeColor.OneDrive"/>
 <div style="height: 100vh;">
@@ -18,6 +19,7 @@
         </Body>
         <NavMenuContent>
             <FluentNavLink  Icon="@(new Icons.Regular.Size20.Home())" Href="/" Text="Inicio" Match="NavLinkMatch.All">Inicio</FluentNavLink>
+            <FluentNavLink  Icon="@(new Icons.Regular.Size20.Person())" Href="@PageRoutes.Presidents" Text="Presidentes" Match="NavLinkMatch.All">Presidentes</FluentNavLink>
         </NavMenuContent>
     </FluentMainLayout>
 </div>
