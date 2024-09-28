@@ -14,20 +14,36 @@ provider "spot" {
   token = var.token
 }
 
-# Obtener los detalles del kubeconfig de Rackspace
 data "spot_kubeconfig" "example" {
   cloudspace_name = var.cloudspace_name
 }
 
-# Proveedor de Kubernetes usando la configuración obtenida de spot_kubeconfig
 provider "kubernetes" {
   host     = data.spot_kubeconfig.example.kubeconfigs[0].host
   token    = data.spot_kubeconfig.example.kubeconfigs[0].token
   insecure = data.spot_kubeconfig.example.kubeconfigs[0].insecure
 }
 
+# Verificar si ya existe el deployment
+data "kubernetes_deployment" "existing_colombia_web" {
+  metadata {
+    name      = "colombia-web-deployment"
+    namespace = "default"
+  }
+}
+
+# Verificar si ya existe el servicio
+data "kubernetes_service" "existing_colombia_web_service" {
+  metadata {
+    name      = "colombia-web-service"
+    namespace = "default"
+  }
+}
+
 # Recurso Deployment de Kubernetes
 resource "kubernetes_deployment" "colombia_web" {
+  count = length(data.kubernetes_deployment.existing_colombia_web.metadata.0.name) == 0 ? 1 : 0
+
   metadata {
     name = "colombia-web-deployment"
     labels = {
@@ -48,6 +64,9 @@ resource "kubernetes_deployment" "colombia_web" {
       metadata {
         labels = {
           app = "colombia-web"
+        }
+        annotations = {
+          "deployment.kubernetes.io/restartedAt" = timestamp()
         }
       }
 
@@ -77,10 +96,31 @@ resource "kubernetes_deployment" "colombia_web" {
       }
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations["deployment.kubernetes.io/restartedAt"]
+    ]
+  }
 }
 
-# Recurso Service de Kubernetes
+# Recurso para reiniciar el Deployment si ya existe
+resource "null_resource" "restart_colombia_web" {
+  count = length(data.kubernetes_deployment.existing_colombia_web.metadata.0.name) > 0 ? 1 : 0
+
+  triggers = {
+    timestamp = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = "kubectl rollout restart deployment colombia-web-deployment"
+  }
+}
+
+# Recurso Service de Kubernetes, solo si no existe
 resource "kubernetes_service" "colombia_web_service" {
+  count = length(data.kubernetes_service.existing_colombia_web_service.metadata.0.name) == 0 ? 1 : 0
+
   metadata {
     name = "colombia-web-service"
   }
