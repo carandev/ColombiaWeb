@@ -119,6 +119,4 @@ jobs:
         env:
           SPOT_TOKEN: ${{ secrets.SPOT_TOKEN }}
           CLOUDSPACE_NAME: ${{ secrets.CLOUDSPACE_NAME }}
-        run: terraform apply -auto-approve \
-          -var="token=${{ secrets.SPOT_TOKEN }}" \
-          -var="cloudspace_name=${{ secrets.CLOUDSPACE_NAME }}"
+        run: terraform apply -auto-approve -var="token=${{ secrets.SPOT_TOKEN }}" -var="cloudspace_name=${{ secrets.CLOUDSPACE_NAME }}"
