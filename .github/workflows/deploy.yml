@@ -100,13 +100,14 @@ jobs:
         
   deploy:
     runs-on: ubuntu-latest
+    needs: [deploy_image]
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
       
       # Instalar Terraform para generar el kubeconfig
       - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
 
       - name: Run Terraform to get kubeconfig
         run: |
