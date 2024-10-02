@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: colombia-web-deployment
+  labels:
+    app: colombia-web
+spec:
+  replicas: 1  # Número de réplicas de la aplicación
+  selector:
+    matchLabels:
+      app: colombia-web
+  template:
+    metadata:
+      labels:
+        app: colombia-web
+    spec:
+      containers:
+        - name: colombia-web-container
+          image: ghcr.io/carandev/colombiaweb:main
+          ports:
+            - containerPort: 8080  # Puerto expuesto por tu aplicación
+          env: # Variables de entorno si tu app las necesita
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: COLOMBIA_API
+              value: "https://api-colombia.com"
+      imagePullSecrets:
+        - name: github-pkg-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: colombia-web-service
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30003
+  selector:
+    app: colombia-web
