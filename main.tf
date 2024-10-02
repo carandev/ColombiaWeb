@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    spot = {
+      source = "rackerlabs/spot"
+    }
+  }
+}
+
 provider "spot" {
   token = var.token  # Usa un secret para el token
 }
