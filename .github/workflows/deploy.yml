@@ -112,7 +112,7 @@ jobs:
       - name: Run Terraform to get kubeconfig
         run: |
           terraform init
-          terraform apply -auto-approve
+          terraform apply -auto-approve -input=false
         env:
           SPOT_AUTH_TOKEN: ${{ secrets.SPOT_AUTH_TOKEN }}
           CLOUDSPACE_NAME: ${{ secrets.CLOUDSPACE_NAME }}
