@@ -6,4 +6,5 @@ variable "cloudspace_name" {
 variable "token" {
   description = "El token de acceso para Spot en Rackspace"
   type        = string
+  sensitive   = true
 }

@@ -15,6 +15,6 @@ data "spot_kubeconfig" "example" {
 }
 
 output "kubeconfig" {
-  value     = data.spot_kubeconfig.example
+  value     = data.spot_kubeconfig.example.raw
   sensitive = true  # Esto oculta el valor en la salida
 }

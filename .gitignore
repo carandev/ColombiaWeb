@@ -4,3 +4,7 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea/.idea.ColombiaWeb/Docker
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+.terraform/providers/registry.terraform.io/rackerlabs/spot/0.1.0/darwin_amd64
