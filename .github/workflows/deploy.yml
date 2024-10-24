@@ -112,10 +112,9 @@ jobs:
       - name: Run Terraform to get kubeconfig
         run: |
           terraform init
-          terraform apply -auto-approve -input=false
-        env:
-          SPOT_AUTH_TOKEN: ${{ secrets.SPOT_AUTH_TOKEN }}
-          CLOUDSPACE_NAME: ${{ secrets.CLOUDSPACE_NAME }}
+          terraform apply -auto-approve -input=false \
+            -var="cloudspace_name=${{ secrets.CLOUDSPACE_NAME }}" \
+            -var="token=${{ secrets.SPOT_AUTH_TOKEN }}"
 
       # Extraer el contenido del kubeconfig generado por Terraform y usarlo en kubectl
       - name: Set up kubeconfig
