@@ -3,6 +3,7 @@
         <h1>@PresidentDetails.Name @PresidentDetails.LastName</h1>
         <article class="viewer-content">
             <img src="@PresidentDetails.Image" alt="@PresidentDetails.Name" height="300px">
+            <small>@PresidentDetails.PoliticalParty</small>
             <h4>
                 Desde <DateWithoutTimeViewer Date="@PresidentDetails.StartPeriodDate"/>
                 @if (PresidentDetails.EndPeriodDate.HasValue)
